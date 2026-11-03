@@ -1,0 +1,13 @@
+# secrets and local settings
+.env
+*.env
+!.env.example
+local_sources.py
+local_weekly_prompt.md
+
+# runtime data
+data/
+*.db
+*.db-journal
+__pycache__/
+*.pyc

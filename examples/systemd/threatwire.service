@@ -1,0 +1,20 @@
+# User unit. Install:  cp threatwire.{service,timer} ~/.config/systemd/user/
+#                      systemctl --user daemon-reload
+#                      systemctl --user enable --now threatwire.timer
+# Edit the paths if you cloned somewhere other than ~/threat-wire.
+# On a server with no login session, run `loginctl enable-linger $USER` once,
+# or install it as a system unit with User= set.
+[Unit]
+Description=Threat Wire - cybersecurity alerts to Telegram
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-%h/.config/threatwire.env
+WorkingDirectory=%h/threat-wire
+ExecStart=/usr/bin/python3 %h/threat-wire/threatwire.py
+TimeoutStartSec=540
+
+[Install]
+WantedBy=default.target

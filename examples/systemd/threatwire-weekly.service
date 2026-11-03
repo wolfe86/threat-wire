@@ -1,0 +1,16 @@
+# Optional. Needs Claude Code installed and signed in for the written report;
+# without it, use --bundle-only.
+[Unit]
+Description=Threat Wire weekly report
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-%h/.config/threatwire.env
+WorkingDirectory=%h/threat-wire
+ExecStart=/usr/bin/python3 %h/threat-wire/threatwire_weekly.py
+TimeoutStartSec=3900
+
+[Install]
+WantedBy=default.target
